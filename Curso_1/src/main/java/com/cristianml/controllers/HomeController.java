@@ -14,6 +14,6 @@ public class HomeController {
 	@GetMapping("/") // Sólo slash devuelve algo vacío
 	@ResponseBody // Sirve para mostrar texto en la ejecución del navegador (casi no se usa en lo laboral)
 	public String home() {
-		return "Hola mundito";
+		return "Hola mundito, más texto."; 
 	}
 }
