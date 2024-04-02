@@ -2,6 +2,7 @@ package com.cristianml.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,5 +24,14 @@ public class HomeController {
 	@ResponseBody
 	public String nostros() {
 		return "Hola desde nosotros";
+	}
+	
+	// Creando parámetros para pasarlos en la url
+	// Los parámetros los creamos con:
+	// @PathVariable(("nombre_ruta")) String nombre_variable => puede ser cualquier tipo de dato
+	@GetMapping("/parametros/{id1}/{slug1}")
+	@ResponseBody
+	public String parametros(@PathVariable("id1") Long id, @PathVariable("slug1") String slug) {
+		return "id = " + id + " || slug = " + slug;
 	}
 }
