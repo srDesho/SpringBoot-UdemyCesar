@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 // Agregamos la anotación @Controller para especificar que éste es un controlador
 @Controller
-@RequestMapping("/") // Se pone debaje del @Controller y sirve para indicar una ruta, similar al @GetMapping
+@RequestMapping("") // Se pone debaje del @Controller y sirve para indicar una ruta, similar al @GetMapping
 public class HomeController {
 	
 	// Llamamos a las variables de nuestra application.properties
