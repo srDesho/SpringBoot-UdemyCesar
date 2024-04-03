@@ -31,9 +31,9 @@ public class HomeController {
 	// cargará una ruta.
 	
 	@GetMapping("/") // Sólo slash devuelve algo vacío
-	@ResponseBody // Sirve para mostrar texto en la ejecución del navegador (casi no se usa en lo laboral)
+	// @ResponseBody // Sirve para mostrar texto en la ejecución del navegador (casi no se usa en lo laboral)
 	public String home() {
-		return "Hola mundito, más texto."; 
+		return "home/home.html"; 
 	}
 	
 	@GetMapping("/nosotros")
