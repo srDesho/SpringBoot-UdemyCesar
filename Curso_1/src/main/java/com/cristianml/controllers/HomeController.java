@@ -1,5 +1,6 @@
 package com.cristianml.controllers;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/") // Se pone debaje del @Controller y sirve para indicar una ruta, similar al @GetMapping
 public class HomeController {
+	
+	// Llamamos a las variables de nuestra application.properties
+	@Value("${cristian.valores.nombre}")
+	private String cristianValoresNombre;
+	@Value("${cristiano.animales.tipos}")
+	private String cristianAnimalesTipos;
+	
+	// Creamos un métodos para llamar las variables
+	@GetMapping("/valores")
+	@ResponseBody
+	public String valores() {
+		return this.cristianValoresNombre + " || " + this.cristianAnimalesTipos;
+	}
+	
 
 	// Creamos un método que va a cargar una ruta y le asignamos el @GetMapping("/") para que sepa que 
 	// cargará una ruta.
@@ -43,4 +58,7 @@ public class HomeController {
 	public String query_string(@RequestParam("id") Long id, @RequestParam("slug") String slug) {
 		return "id = " + id + " || slug = " + slug;
 	}
+	
+	
+	
 }
