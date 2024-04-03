@@ -1,5 +1,9 @@
 package com.cristianml.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,5 +24,25 @@ public class TemplatesController {
 		model.addAttribute("nombre", nombre);
 		model.addAttribute("pais", pais);
 		return "templates/home.html";
+	}
+	
+	@GetMapping("/atributos")
+	public String atributos(Model model) {
+		Integer num1 = 12;
+		Integer num2 = 13;
+		Integer cifra = 12345;
+		Date fecha = new Date();
+		List<String> paises = new ArrayList<String>();
+		paises.add("Bolivia");
+		paises.add("Perú");
+		paises.add("Chile");
+		paises.add("Colombia");
+		model.addAttribute("num1", num1);
+		model.addAttribute("num2", num2);
+		model.addAttribute("cifra", cifra);
+		model.addAttribute("fecha", fecha);
+		model.addAttribute("paises", paises);
+		
+		return "templates/atributos";
 	}
 }
