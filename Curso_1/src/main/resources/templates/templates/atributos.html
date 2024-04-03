@@ -28,6 +28,10 @@
 		<ul>
 			<li th:each="pais:${paises}" th:text="${paisStat.index} + ' - ' + ${pais}"></li>
 		</ul>
+		<hr/>
 		
+		<!-- Formatear números y fechas, usamos helpers # -->
+		<h3 th:text="'$' + ${#numbers.formatDecimal(cifra, 0, 'POINT', 0, 'POINT')}"></h3>
+		<h3 th:text="${#calendars.format(fecha, 'dd-MM-yyyy')}"></h3>
 	</body>
 </html>
