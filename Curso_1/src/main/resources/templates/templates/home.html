@@ -1,1 +1,11 @@
-cualquiera
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+	</head>
+	<body>
+		<h1 th:text="'Hola desde el template.'"></h1>
+		<h2 th:text="'Hola ' + ${nombre}"></h2>
+		<h3 th:text="'Eres de ' + ${pais}"></h3>
+	</body>
+</html>
