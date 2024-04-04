@@ -15,7 +15,7 @@
      }
      if (horas == 0) horas = 12;
      if(mt=="PM"){horas=horas+12;}
-     */
+     */ 
      // Pongo minutos y segundos con dos digitos
      if (minutos <= 9) minutos = "0" + minutos;
      if (segundos <= 9) segundos = "0" + segundos;
