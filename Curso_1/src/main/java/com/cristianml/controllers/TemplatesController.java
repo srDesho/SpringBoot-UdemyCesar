@@ -45,4 +45,9 @@ public class TemplatesController {
 		
 		return "templates/atributos";
 	}
+	
+	@GetMapping("/estaticos")
+	public String estaticos(Model model) {
+		return "templates/estaticos";
+	}
 }
