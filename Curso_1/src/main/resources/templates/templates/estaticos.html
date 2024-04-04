@@ -2,9 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8"/>
+		<link rel="stylesheet" th:href="@{/css/estilos.css}" />
 	</head>
+	<body>
+		
 		<h1>Recursos estáticos</h1>
 		<hr/>
-		<img th:src="@{/images/logoYT.png}">
+		<img th:src="@{/images/logoYT.png}" />	
+
+		<script type="text/javascript" th:src="@{/js/funciones.js}"></script>
 	</body>
 </html>
