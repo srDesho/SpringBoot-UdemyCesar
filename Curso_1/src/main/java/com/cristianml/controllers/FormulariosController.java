@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cristianml.modelos.UsuarioModel;
+
 @Controller
 @RequestMapping("/formularios")
 public class FormulariosController {
@@ -33,4 +35,16 @@ public class FormulariosController {
 	}
 	
 	// ================================ Formulario De Objetos ==================================
+	@GetMapping("/objeto")
+	public String objeto() {
+		return "/formularios/objeto";
+	}
+	
+	// Creamos el método con @PostMapping para recibir valores del formulario a travez de la entidad UsuarioModel
+	@PostMapping("/objeto")
+	@ResponseBody
+	public String objeto_post(UsuarioModel usuario) {
+		return "<h1>Objeto</h1>Nombre de usuario= " + usuario.getUsername() + "<br>Email= " + usuario.getEmail()
+		+ "<br>Password= " + usuario.getPassword();
+	}
 }
