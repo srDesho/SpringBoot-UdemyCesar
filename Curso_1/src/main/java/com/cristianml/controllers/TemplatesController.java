@@ -50,4 +50,9 @@ public class TemplatesController {
 	public String estaticos(Model model) {
 		return "templates/estaticos";
 	}
+	
+	@GetMapping("/estaticos2")
+	public String estaticos2 (Model model) {
+		return "/templates/estaticos2";
+	}
 }
