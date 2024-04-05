@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/templates")
@@ -55,4 +56,19 @@ public class TemplatesController {
 	public String estaticos2 (Model model) {
 		return "/templates/estaticos2";
 	}
+	
+	@GetMapping("/ajax")
+	public String ajax(Model model) {
+		return "/templates/ajax";
+	}
+	
+	@GetMapping("/peticion")
+	public String peticion(@RequestParam("valor") String valor, Model model) {
+		
+		// Agregamos el valor que viene desde el método del script al model
+		model.addAttribute("valor", valor);
+		return "/templates/peticion"; 
+	}
+	
+	
 }

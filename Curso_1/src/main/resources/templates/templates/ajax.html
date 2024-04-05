@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="layout/frontend :: head(~{::tittle}, ~{::links})">
+		
+	</head>
+	<body>
+		<div class="container">
+			<header th:replace="/layout/frontend :: cabecero"></header>
+			<div th:replace="/layout/frontend :: menu"></div>
+		</div>
+		
+		<main class="container">
+				<h1>AJAX</h1>
+				<a href="javascript:void(0);" onclick="carga_ajax_get('/templates/peticion', 'Hola desde Ajax', 'ajax')">Click aquí</a>
+				
+				<div id="ajax"></div>
+		</main>	
+		
+
+		<footer th:replace="layout/frontend :: footer"></footer>
+		<div th:replace="/layout/frontend :: scripts"></div>
+	</body>
+</html>

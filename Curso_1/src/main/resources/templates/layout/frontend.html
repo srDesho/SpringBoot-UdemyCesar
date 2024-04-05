@@ -28,6 +28,8 @@
 				
 	<link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet" />
 	<link th:href="@{/css/blog.css}" rel="stylesheet">
+	<link th:href="@{/fontawesome-free-5.15.4-web/css/all.css}" rel="stylsheet" />
+	<link th:href="@{/css/jquery.alerts.min.css}" rel="stylsheet" />	
 	</head>
 	<body>
 		
@@ -55,6 +57,7 @@
 		    <nav class="nav nav-underline justify-content-between">
 		      <a class="nav-item nav-link link-body-emphasis active" th:href="@{/templates/estaticos}">Estáticos</a>
 		      <a class="nav-item nav-link link-body-emphasis" th:href="@{/templates/estaticos2}">Estáticos 2</a>
+		      <a class="nav-item nav-link link-body-emphasis" th:href="@{/templates/ajax}">AJAX</a>
 		    </nav>
 		  </div>
 		</div>
@@ -67,6 +70,9 @@
 		</footer>
 		
 		<div th:fragment="scripts">
+			<script th:src="@{/js/jquery.min.js}"></script>
+			<script th:src="@{/js/bootstrap.min.js}"></script>
+			<script th:src="@{/js/jquery.alerts.min.js}"></script>
 			<script type="text/javascript" th:src="@{/js/funciones.js}"></script>
 		</div>
 	</body>
