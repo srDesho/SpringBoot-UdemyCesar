@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="layout/frontend :: head(~{::title}, ~{::link})">
 		<link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+		<link rel="stylesheet" th:href="@{/fancybox/jquery.fancybox.css}" type="text/css" />
 	</head>
 	<body>
 		<div class="container">
@@ -10,14 +11,25 @@
 		</div>
 		
 		<main class="container">
-				<h1>AJAX</h1>
-				<a href="javascript:void(0);" onclick="carga_ajax_get('/templates/peticion', 'Mariana', 'ajax')">Click aquí</a>
-				
-				<div id="ajax"></div>
+				<h1>FancyBox</h1>
+				<a th:href="@{/images/yoda.png}" class="fancybox">
+					<img th:src="@{/images/yoda.png}" width="100" height="100" />
+				</a>
 		</main>	
 		
 
 		<footer th:replace="layout/frontend :: footer"></footer>
 		<div th:replace="/layout/frontend :: scripts"></div>
+		
+		<script type="text/javascript" th:src="@{/fancybox/jquery.fancybox.js}"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$(".fancybox").fancybox({
+					openEffect : 'none',
+					closeEffect : 'none',
+				});
+			});
+			
+		</script>
 	</body>
 </html>

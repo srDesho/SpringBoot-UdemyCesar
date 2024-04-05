@@ -70,5 +70,11 @@ public class TemplatesController {
 		return "/templates/peticion"; 
 	}
 	
+	@GetMapping("/fancybox")
+	public String fancybox(Model model) {
+		return "/templates/fancybox";
+	}
+	
+	
 	
 }

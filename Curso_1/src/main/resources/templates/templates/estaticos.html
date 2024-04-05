@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head th:replace="layout/frontend :: head(~{::tittle}, ~{::links})">
+	<head th:replace="layout/frontend :: head(~{::title}, ~{::link})">
+		<link th:href="@{/css/estilos.css}" rel="stylesheet"/>
 		
+		
+
 	</head>
 	<body>
 		<div class="container">
