@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="layout/frontend :: head(~{::tittle}, ~{::links})">
-		<meta charset="utf-8"/>
-		<link rel="stylesheet" th:href="@{/css/estilos.css}" />
+		
 	</head>
 	<body>
+		<div class="container">
+			<header th:replace="/layout/frontend :: cabecero"></header>
+			<div th:replace="/layout/frontend :: menu"></div>
+		</div>
 		
-		<h1>Recursos estáticos</h1>
-		<hr/>
-		<img th:src="@{/images/logo.png}" />	
+		<main class="container">
+				<h1>Recursos estáticos</h1>
+				<hr/>
+				<img th:src="@{/images/logo.png}" />
+					
+		</main>	
+		
 
+		<footer th:replace="layout/frontend :: footer"></footer>
 		<div th:replace="/layout/frontend :: scripts"></div>
 	</body>
 </html>
