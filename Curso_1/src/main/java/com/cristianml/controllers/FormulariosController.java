@@ -1,13 +1,21 @@
 package com.cristianml.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.naming.Binding;
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cristianml.modelos.Usuario2Model;
 import com.cristianml.modelos.UsuarioModel;
 
 @Controller
@@ -64,8 +72,34 @@ public class FormulariosController {
 			+ "<br>Password= " + usuario.getPassword();
 		}
 	
-	
-	
+	// ============================== Formulario validaciones ===================================
+		@GetMapping("/validaciones")
+		public String validaciones(Model model) {
+			model.addAttribute("usuario", new Usuario2Model());
+			return "/formularios/validaciones";
+		}
+		
+		// Método para procesar los datos con @PostMapping()
+		@PostMapping("/validaciones")
+		// @Valid nos sirve para que el método pueda hacer uso de las validaciones de nuestra entidad mapeada
+		// seguido de este parámetro agregamos el BingdingResult result porque van de la mano y es exigido por java
+		public String validaciones_post( @Valid Usuario2Model usuario, BindingResult result, Model model) {
+			if(result.hasErrors()) {
+				Map<String, String> errores = new HashMap<>();
+				result.getFieldErrors()
+				.forEach( err -> {
+					errores.put(err.getField(),
+							"El campo ".concat(err.getField()).concat(" ").concat(err.getDefaultMessage()));
+				});
+				
+				model.addAttribute("errores", errores);
+				model.addAttribute("usuario", usuario);
+				return "/formularios/validaciones";
+			}
+			// model.addAttribute("usuario", usuario) le pasa el model a la vista mediante ${@usuario}
+			model.addAttribute("usuario", usuario);
+			return "/formularios/validaciones_result";
+		}
 	
 	
 	

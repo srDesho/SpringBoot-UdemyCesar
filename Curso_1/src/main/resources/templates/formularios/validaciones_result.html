@@ -12,23 +12,12 @@
 		</div>
 		
 		<main class="container">
-				<h1>Formularios</h1>
+				<h1>Formulario Validaciones Resultado</h1>
 				<ul>
-					<li>
-						<a th:href="@{/formularios/simple}">Formulario Simple</a>
-					</li>
-					<li>
-						<a th:href="@{/formularios/objeto}">Formulario Objeto</a>
-					</li>
-					<li>
-						<a th:href="@{/formularios/objeto2}">Formulario Objeto 2</a>
-					</li>
-					<li>
-						<a th:href="@{/formularios/validaciones}">Formulario Validaciones</a>
-					</li>
+					<li th:text="'username: ' +${usuario.username}" ></li>
+					<li th:text="'email: ' +${usuario.email}" ></li>
+					<li th:text="'password: ' +${usuario.password}" ></li>
 				</ul>
-				<hr/>
-				
 					
 		</main>	
 		
