@@ -1,6 +1,7 @@
 package com.cristianml.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,4 +48,25 @@ public class FormulariosController {
 		return "<h1>Objeto</h1>Nombre de usuario= " + usuario.getUsername() + "<br>Email= " + usuario.getEmail()
 		+ "<br>Password= " + usuario.getPassword();
 	}
+	
+	// ============ Formulario De Objetos 2, otra manera de recibir datos del formulario============
+		@GetMapping("/objeto2")
+		public String objeto2(Model model) {
+			model.addAttribute("usuario", new UsuarioModel());
+			return "/formularios/objeto2";
+		}
+	
+	// Obtenemos los datos del formulario a travez de @PostMapping()
+		@PostMapping("/objeto2")
+		@ResponseBody
+		public String objeto2_post(UsuarioModel usuario) {
+			return "<h1>Objeto 2</h1>Nombre de usuario= " + usuario.getUsername() + "<br>Email= " + usuario.getEmail()
+			+ "<br>Password= " + usuario.getPassword();
+		}
+	
+	
+	
+	
+	
+	
 }
