@@ -1,6 +1,8 @@
 package com.cristianml.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.naming.Binding;
@@ -10,12 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cristianml.modelos.PaisModel;
 import com.cristianml.modelos.Usuario2Model;
+import com.cristianml.modelos.Usuario3Model;
 import com.cristianml.modelos.UsuarioModel;
 
 @Controller
@@ -101,6 +106,52 @@ public class FormulariosController {
 			return "/formularios/validaciones_result";
 		}
 	
-	
+		// ================================ Formulario select dinámico ==========================================
+		@GetMapping("/select-dinamico")
+		public String select_dinamico(Model model) {
+			
+			
+			
+			// Agregamos al model para que tenga almacenado el objeto usuario y pueda ser llamados en la vista
+			model.addAttribute("usuario", new Usuario3Model());
+			return "/formularios/select_dinamico";
+		}
+		
+		// Recibimos los datos desde la vista
+		@PostMapping("/select-dinamico")
+		public String select_dinamico_post(@Valid Usuario3Model usuario, BindingResult result, Model model ) {
+			if(result.hasErrors()) {
+				Map<String, String> errores = new HashMap<>();
+				result.getFieldErrors()
+				.forEach( err -> {
+					errores.put(err.getField(),
+							"El campo ".concat(err.getField()).concat(" ").concat(err.getDefaultMessage()));
+				});
+				
+				model.addAttribute("errores", errores);
+				model.addAttribute("usuario", usuario);
+				return "/formularios/select_dinamico";
+			}
+			// model.addAttribute("usuario", usuario) le pasa el model a la vista mediante ${@usuario}
+			model.addAttribute("usuario", usuario);
+			return "/formularios/select_dinamico_result";
+		}
+		
+		// =============================== Campos genéricos mediante @ModelAttribute  ==============================
+		// ésto nos servirá para tener la lista de países almacenada y que pueda ser llamada en varios métodos
+		// también nos sirve para almacenar rutas de pack de imagenes externo que se usaran en distinto métodos
+		// categorias de productos, cadenas de texto, etc.
+		@ModelAttribute
+		public void setGenericos(Model model) {
+			List<PaisModel> paises = new ArrayList<PaisModel>();
+			paises.add(new PaisModel(1, "Bolivia"));
+			paises.add(new PaisModel(2, "Chile"));
+			paises.add(new PaisModel(3, "Argentina"));
+			paises.add(new PaisModel(3, "Colombia"));
+			paises.add(new PaisModel(3, "España"));
+			model.addAttribute("paises", paises);
+		}
+		
+		
 	
 }
