@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cristianml.modelos.InteresesModel;
 import com.cristianml.modelos.PaisModel;
 import com.cristianml.modelos.Usuario2Model;
 import com.cristianml.modelos.Usuario3Model;
+import com.cristianml.modelos.UsuarioCheckboxModel;
 import com.cristianml.modelos.UsuarioModel;
 
 @Controller
@@ -137,6 +139,32 @@ public class FormulariosController {
 			return "/formularios/select_dinamico_result";
 		}
 		
+		// ================================= Formulario checkbox =====================================
+		@GetMapping("/checkbox")
+		public String checkbox(Model model) {
+			model.addAttribute("usuario", new UsuarioCheckboxModel());
+			return "/formularios/checkbox";
+		}
+		
+		@PostMapping("/checkbox")
+		public String checkbox_post(@Valid UsuarioCheckboxModel usuario, BindingResult result, Model model) {
+			if(result.hasErrors()) {
+				Map<String, String> errores = new HashMap<>();
+				result.getFieldErrors()
+				.forEach( err -> {
+					errores.put(err.getField(),
+							"El campo ".concat(err.getField()).concat(" ").concat(err.getDefaultMessage()));
+				});
+				
+				model.addAttribute("errores", errores);
+				model.addAttribute("usuario", usuario);
+				return "/formularios/checkbox";
+			}
+			// model.addAttribute("usuario", usuario) le pasa el model a la vista mediante ${@usuario}
+			model.addAttribute("usuario", usuario);
+			return "/formularios/checkbox_result";
+		}
+		
 		// =============================== Campos genéricos mediante @ModelAttribute  ==============================
 		// ésto nos servirá para tener la lista de países almacenada y que pueda ser llamada en varios métodos
 		// también nos sirve para almacenar rutas de pack de imagenes externo que se usaran en distinto métodos
@@ -150,8 +178,16 @@ public class FormulariosController {
 			paises.add(new PaisModel(3, "Colombia"));
 			paises.add(new PaisModel(3, "España"));
 			model.addAttribute("paises", paises);
+			
+			// Creamos una lista para los interese
+			List<InteresesModel> intereses = new ArrayList<InteresesModel>();
+			intereses.add(new InteresesModel(1, "Música"));
+			intereses.add(new InteresesModel(2, "Deportes"));
+			intereses.add(new InteresesModel(3, "Religión"));
+			intereses.add(new InteresesModel(4, "Economía"));
+			intereses.add(new InteresesModel(5, "Política"));
+			// agregamos al model para que sea almacenado y ser accesado por la vista
+			model.addAttribute("intereses", intereses);
 		}
-		
-		
 	
 }

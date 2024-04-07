@@ -11,7 +11,7 @@ import com.cristianml.modelos.PaisModel;
 public class ConvertirPaisId implements Converter<String, PaisModel> {
 
 	@Override
-	public PaisModel convert(String source) {
+	public PaisModel convert(String source) { // Source viene de la etiqueta value que escribimos en neustro select
 		Integer idPais = Integer.valueOf(source);
 		PaisModel datos = new PaisModel();
 		datos.setIdPais(idPais);
