@@ -1,0 +1,1 @@
+This folder is to test file uploads from Curso_1 project.
