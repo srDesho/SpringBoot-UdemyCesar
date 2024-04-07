@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.method.annotation.RedirectAttributesMethodArgumentResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cristianml.modelos.InteresesModel;
 import com.cristianml.modelos.PaisModel;
@@ -163,6 +165,27 @@ public class FormulariosController {
 			// model.addAttribute("usuario", usuario) le pasa el model a la vista mediante ${@usuario}
 			model.addAttribute("usuario", usuario);
 			return "/formularios/checkbox_result";
+		}
+		
+		// Creación de mensajes flash
+		@GetMapping("/flash")
+		public String flash(Model model) {
+			model.addAttribute("usuario", new UsuarioModel());
+			return "/formularios/flash";
+		}
+		
+		// Obtenemos los datos
+		@PostMapping("/flash")
+		public String flash_post(UsuarioModel usuario, RedirectAttributes flash) {
+			flash.addFlashAttribute("clase", "success");
+			flash.addFlashAttribute("mensaje", "Ejemplo de mensaje flash con BootsTrap");
+			return "redirect:/formularios/flash-respuesta"; // Redirecciona al flash_respuesta()
+		}
+		
+		// Redireccionamos a otra vista donde se mostrará el mensaje flash
+		@GetMapping("/flash-respuesta")
+		public String flash_respuesta(Model model) {
+			return "/formularios/flash_respuesta";
 		}
 		
 		// =============================== Campos genéricos mediante @ModelAttribute  ==============================
