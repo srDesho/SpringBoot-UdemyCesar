@@ -32,8 +32,8 @@ public class Configuracion implements WebMvcConfigurer {
 		// agregamos el nombre de la carpeta y doble ** para especificar que usará todos lo que tenga dentro
 		registry.addResourceHandler("/upload/**")
 		// Agregamos la ruta escribiendolo en duro
-		// .addResourceLocations("file: D:\\Backend 2024\\StsProject\\SpringBoot-UdemyCesar\\upload");
-		
+		// .addResourceLocations("file: D:\\Backend 2024\\StsProject\\SpringBoot-UdemyCesar\\upload\\");
+		// .addResourceLocations("file:///C:/upload/");
 		// Agregamos la ruta con la variable
 		.addResourceLocations("file: " + this.ruta_upload);
 	}

@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.naming.Binding;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.RedirectAttributesMethodArgumentResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -26,6 +28,8 @@ import com.cristianml.modelos.Usuario2Model;
 import com.cristianml.modelos.Usuario3Model;
 import com.cristianml.modelos.UsuarioCheckboxModel;
 import com.cristianml.modelos.UsuarioModel;
+import com.cristianml.modelos.UsuarioUploadModel;
+import com.cristianml.utilidades.Utilidades;
 
 @Controller
 @RequestMapping("/formularios")
@@ -186,6 +190,65 @@ public class FormulariosController {
 		@GetMapping("/flash-respuesta")
 		public String flash_respuesta(Model model) {
 			return "/formularios/flash_respuesta";
+		}
+		
+		// =============================== Formulario Upload  ==============================
+		// Creamos la variable que almacena la ruta desde la variable de application.properties
+		@Value("${cristian.valores.ruta_upload}")
+		private String ruta_upload; 
+		
+		// Creamos la ruta para nuestro formulario upload
+		@GetMapping("/upload")
+		public String upload(Model model) {
+			model.addAttribute("usuario", new UsuarioUploadModel());
+			return "/formularios/upload";
+		}
+		
+		// Creamos el método Post para que reciba los datos de la vista upload
+		@PostMapping("/upload")
+		public String upload_post(@Valid UsuarioUploadModel usuario, BindingResult result, Model model, 
+				@RequestParam("archivoImagen") MultipartFile multiPart, RedirectAttributes flash) {
+			
+			if(result.hasErrors()) {
+				Map<String, String> errores = new HashMap<>();
+				result.getFieldErrors()
+				.forEach( err -> {
+					errores.put(err.getField(),
+							"El campo ".concat(err.getField()).concat(" ").concat(err.getDefaultMessage()));
+				});
+				
+				model.addAttribute("errores", errores);
+				model.addAttribute("usuario", usuario);
+				return "/formularios/upload";
+			}
+			// Verificamos si no cargo ninguna imagen en el campo de la vista
+			if (multiPart.isEmpty()) {
+				flash.addFlashAttribute("clase", "danger");
+				flash.addFlashAttribute("mensaje", "El archivo para la imágen es obligatorio, debe ser JPG|JPEG|PNG");
+				return "redirect:/formularios/upload"; // Redirecciona al flash_respuesta()
+			}
+			// Si cargó una imágen verificamos el mimetype
+			if (!multiPart.isEmpty()) {
+				// guardamos en una variable el resultado de nuestra utilidad que guarda la imágen
+				// this.ruta_upload+"images" => ruta_upload es la variable de nuestra clase que almacena la ruta
+				// que viene desde application.properties
+				// this.ruta_upload+"images" => images será cualquier carpeta que creamos dentro de la carpeta de la ruta
+				// Obligatorio poner las últimas barras en images\\ o depende si es images/
+				String nombreImagen = Utilidades.guardarArchivo(multiPart, this.ruta_upload+"images/");
+				
+				// Verificamos el valor de nombreImagen
+				if (nombreImagen == "no") {
+					flash.addFlashAttribute("clase", "danger");
+					flash.addFlashAttribute("mensaje", "El archivo para la imágen no es válido, debe ser JPG|JPEG|PNG");
+					return "redirect:/formularios/upload"; // Redirecciona al flash_respuesta()
+				} 
+				if (nombreImagen != null) {
+					usuario.setFoto(nombreImagen);
+				}
+				
+			}
+			model.addAttribute("usuario", usuario);
+			return "/formularios/upload_respuesta";
 		}
 		
 		// =============================== Campos genéricos mediante @ModelAttribute  ==============================
