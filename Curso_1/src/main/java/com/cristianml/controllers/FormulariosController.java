@@ -34,9 +34,16 @@ import com.cristianml.utilidades.Utilidades;
 @Controller
 @RequestMapping("/formularios")
 public class FormulariosController {
+	
+	// Creamos nuestras constantes
+	// Creamos la variable que almacena la ruta desde la variable de application.properties
+	@Value("${cristian.valores.ruta_upload}")
+	private String ruta_upload;
+	
+	@Value("${cristian.valores.base_url_upload}")
+	private String base_url_upload;
 
 	// Creamos una ruta para el home de formularios
-	
 	@GetMapping("")
 	public String home() {
 		return("formularios/home");
@@ -192,10 +199,7 @@ public class FormulariosController {
 			return "/formularios/flash_respuesta";
 		}
 		
-		// =============================== Formulario Upload  ==============================
-		// Creamos la variable que almacena la ruta desde la variable de application.properties
-		@Value("${cristian.valores.ruta_upload}")
-		private String ruta_upload; 
+		// =============================== Formulario Upload  ============================== 
 		
 		// Creamos la ruta para nuestro formulario upload
 		@GetMapping("/upload")
@@ -233,7 +237,7 @@ public class FormulariosController {
 				// this.ruta_upload+"images" => ruta_upload es la variable de nuestra clase que almacena la ruta
 				// que viene desde application.properties
 				// this.ruta_upload+"images" => images será cualquier carpeta que creamos dentro de la carpeta de la ruta
-				// Obligatorio poner las últimas barras en images\\ o depende si es images/
+				// Obligatorio poner la última barras images/
 				String nombreImagen = Utilidades.guardarArchivo(multiPart, this.ruta_upload+"images/");
 				
 				// Verificamos el valor de nombreImagen
@@ -274,6 +278,10 @@ public class FormulariosController {
 			intereses.add(new InteresesModel(5, "Política"));
 			// agregamos al model para que sea almacenado y ser accesado por la vista
 			model.addAttribute("intereses", intereses);
+			
+			// Añadimos al model la dirección Url que se encarga de accesar a la carpeta designada
+			// de la subida de archivos.
+			model.addAttribute("base_url_upload", this.base_url_upload);
 		}
 	
 }

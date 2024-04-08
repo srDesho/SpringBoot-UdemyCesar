@@ -17,7 +17,9 @@
 					<li th:text="'username: ' +${usuario.username}" ></li>
 					<li th:text="'email: ' +${usuario.email}" ></li>
 					<li th:text="'password: ' +${usuario.password}" ></li>
-					
+					<li>
+						<img th:src="${base_url_upload}+'images/'+${usuario.foto}" />
+					</li>
 				</ul>
 					
 		</main>	
