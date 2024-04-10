@@ -63,6 +63,25 @@
 		    <artifactId>core</artifactId>
 		    <version>3.4.1</version>
 		</dependency>
+		
+		<!-- jpa repository mysql -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <scope>runtime</scope>
+		</dependency>
+		<!-- Al agregar estas dependencias el proyecto se rompera, asi que es bueno darle la sgte solucionr -->
+		<!-- Debemos indicar los datos de conexion que vamos a trabajar en el proyecto, creamos el datasource -->
+		<!-- debemos conectarnos a una base de datos de cualquier servicio -->
+		<!--  -->
+		
+		<!-- // jpa repository mysql -->
+		
 
 		<dependency>
 		    <groupId>com.google.zxing</groupId>
