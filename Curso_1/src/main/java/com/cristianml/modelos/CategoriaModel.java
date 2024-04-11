@@ -7,6 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+//Por cada tabla o entidad crados en nuestros modelos, debemos crear una interface y un servicio
+//desde el servicio vamos a ejecutar las consultas mediante la inyección de esta inteerface de comunicación
+//que tiene JpaRepository
+
+
 @Entity
 @Table(name = "categoria") // Importante que tenga el mismo nombre en la base de datos
 public class CategoriaModel {

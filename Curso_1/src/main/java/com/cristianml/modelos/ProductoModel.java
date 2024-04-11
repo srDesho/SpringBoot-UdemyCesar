@@ -7,10 +7,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
+// import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+//Por cada tabla o entidad crados en nuestros modelos, debemos crear una interface y un servicio
+//desde el servicio vamos a ejecutar las consultas mediante la inyección de esta inteerface de comunicación
+//que tiene JpaRepository
+
 
 @Entity
 @Table(name = "productos")
