@@ -12,5 +12,11 @@ import com.cristianml.modelos.CategoriaModel;
 // Esta interface va a extender de JpaRepoitory<T, ID> done T es el modelo 
 // y en ID debemos escribir el tipo de dato del id del modelo 
 public interface ICategoriaRepositorio extends JpaRepository<CategoriaModel, Integer>{
-
+	
+	// Creamos un método que va a verificar si ua existe un slug
+	// en el nombre debe ir como nomenclatura el existBy de lado izquierdo, seguido del nombre
+	// del campo que queremos verificar.
+	// Esto nos sirve para verificar si existe un sólo dato de nuestra tabla de bd.
+	public boolean existsBySlug(String slug);
+	
 }

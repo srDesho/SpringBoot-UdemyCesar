@@ -23,9 +23,27 @@ public class CategoriaService {
 	
 	// Creamos los métodos de altas, bajas, lectura y modificaciones
 	
-	// Obtener productos
+	// Obtener categorias
 	public List<CategoriaModel> listar() {
 		return repositorio.findAll();
 	}
+	
+	// Crear categoria
+	public void guardar(CategoriaModel categoria) {
+		repositorio.save(categoria);
+	}
+	
+	// Buscar por slug
+	// éste méotodo nos va a verificar si un slug ya existe en la base de datos, 
+	// el método debemos crearlo en la ICategoriaRepository
+	public boolean buscarPorSlug(String slug) {
+		if (repositorio.existsBySlug(slug)) {
+			return false; // Si existe no se permitirá continuar con el proyecto para crear un nuevo dato
+		} else {
+			return true;
+		}
+	}
+	
+	
 	
 }
