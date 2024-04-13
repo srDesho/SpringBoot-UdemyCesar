@@ -34,6 +34,12 @@ public class CategoriaService {
 		repositorio.save(categoria);
 	}
 	
+	// Eliminar una categoría
+	public void eliminar(Integer id) {
+		repositorio.deleteById(id);
+	}
+	
+	
 	// Buscar categoría por id
 	public CategoriaModel buscarPorId(Integer id) {
 		// Creamos un objeto optional para que springboot pueda verificar si el dato existe

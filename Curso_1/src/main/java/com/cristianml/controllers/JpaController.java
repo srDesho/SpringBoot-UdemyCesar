@@ -123,6 +123,27 @@ public class JpaController {
 		return "redirect:/jpa-repository/categorias/editar/"+id;
 	}
 	
+	// Método para eliminar una categoría
+	@GetMapping("/categorias/delete/{id}")
+	public String categorias_delete(@PathVariable("id") Integer id, RedirectAttributes flash) {
+		// Lo cerramos en un try catch
+		try {
+			this.categoriaService.eliminar(id);
+			flash.addFlashAttribute("clase", "success");
+			flash.addFlashAttribute("mensaje", "Se eliminó el registro exitosamente.");
+			return "redirect:/jpa-repository/categorias/";
+		} catch (Exception e) {
+			flash.addFlashAttribute("clase", "danger");
+			flash.addFlashAttribute("mensaje", "No se pudo eliminar el registro, intentelo más tarde.");
+			return "redirect:/jpa-repository/categorias/";
+		}
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 }
