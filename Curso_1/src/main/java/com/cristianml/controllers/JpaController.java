@@ -6,10 +6,12 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cristianml.modelos.CategoriaModel;
 import com.cristianml.service.CategoriaService;
+import com.cristianml.service.ProductoService;
 import com.cristianml.utilidades.Utilidades;
 
 @Controller
@@ -26,6 +29,13 @@ public class JpaController {
 	// Inyectamos los servicios que nos permitirán acceder los datos de la DB
 	@Autowired
 	private CategoriaService categoriaService;
+
+	@Autowired
+	private ProductoService productoService;
+	
+	// Agregamos nuestra ruta de imágenes del servidor
+	@Value("${cristian.valores.base_url_upload}")
+	private String base_url_upload;
 	
 	@GetMapping("")
 	public String home(Model model) {
@@ -139,7 +149,22 @@ public class JpaController {
 		}
 	}
 	
-	
+	// ================================ PRODUCTOS ===================================
+		@GetMapping("/productos")
+		public String productos(Model model) {
+			
+			// objetemos la liste de categorias y la enviamos con model a la vista
+			model.addAttribute("datos", this.productoService.listar());
+			return "/jpa_repository/productos";
+		}
+		
+	// ================================= CAMPOS GENÉRICOS ====================================
+	// Añadimos al model la dirección Url que se encarga de accesar a la carpeta designada
+	// de la subida de archivos.
+		@ModelAttribute
+		public void setGenericos(Model model) {
+			model.addAttribute("ruta_upload", this.base_url_upload);
+		}
 	
 	
 	
