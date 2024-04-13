@@ -29,7 +29,10 @@
 						<tr>
 							<td th:text="${dato.id}"></td>
 							<td th:text="${dato.nombre}"></td>
-							<td></td>
+							<td>
+								<a th:href="@{/jpa-repository/categorias/editar/}+${dato.id}"><i class="fas fa-edit"></i></a>
+								<a th:href="@{/jpa-repository/categorias/editar/}+${dato.id}"><i class="fas fa-trash"></i></a>
+							</td>
 						</tr>
 					</tbody>			
 				</table>

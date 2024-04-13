@@ -1,6 +1,7 @@
 package com.cristianml.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -32,6 +33,18 @@ public class CategoriaService {
 	public void guardar(CategoriaModel categoria) {
 		repositorio.save(categoria);
 	}
+	
+	// Buscar categoría por id
+	public CategoriaModel buscarPorId(Integer id) {
+		// Creamos un objeto optional para que springboot pueda verificar si el dato existe
+		Optional<CategoriaModel> optional = this.repositorio.findById(id);
+		// Verificamos si existe
+		if (optional.isPresent()) {
+			return optional.get(); // Con ésto obtenemos y devolvemos el objeto CategoriaModel
+		}
+		return null;
+	}
+	
 	
 	// Buscar por slug
 	// éste méotodo nos va a verificar si un slug ya existe en la base de datos, 

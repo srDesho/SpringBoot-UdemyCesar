@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -86,8 +87,41 @@ public class JpaController {
 			}
 	}
 	
+	// Método editar una categoría
+	@GetMapping("/categorias/editar/{id}")
+	public String categorias_editar(@PathVariable("id") Integer id, Model model) {
+		CategoriaModel categoria = this.categoriaService.buscarPorId(id);
+		model.addAttribute("categoria", categoria);
+		return "/jpa_repository/categorias_editar";
+	}
 	
-	
+	// Obtenemos el valor nuevo con el método post
+	@PostMapping("/categorias/editar/{id}")
+	public String categorias_editar_post(@Valid CategoriaModel categoria, BindingResult result, Model model
+			, @PathVariable Integer id, RedirectAttributes flash) {
+
+		// Validamos nuestro dato
+		if(result.hasErrors()) {
+			Map<String, String> errores = new HashMap<>();
+			result.getFieldErrors()
+			.forEach( err -> {
+				errores.put(err.getField(),
+						"El campo ".concat(err.getField()).concat(" ").concat(err.getDefaultMessage()));
+			});
+			
+			model.addAttribute("errores", errores);
+			model.addAttribute("categoria", categoria);
+			return "/jpa_repoitory/categorias_editar";
+			
+			}
+		// Cambiamos el slug
+		categoria.setSlug(Utilidades.getSlug(categoria.getNombre()));
+		// Guardamos nuestra categoria con el nombre cambiado
+		categoriaService.guardar(categoria);
+		flash.addFlashAttribute("clase", "success");
+		flash.addFlashAttribute("mensaje", "Se editó el registro exitosamente.");
+		return "redirect:/jpa-repository/categorias/editar/"+id;
+	}
 	
 	
 	
