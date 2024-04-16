@@ -27,7 +27,7 @@ public class Utilidades {
 			try {
 				// Creamos el archivo(objeto) con la clase File de IO
 				File imageFile = new File(ruta+nombre); // Recibe la ruta de la carpeta y el nombre agregado
-				// Hacemos la subida (upload) con transferTo;
+				// Hacemos la subida (upload) con transferTo aquí es donde se crea el archivo imágen;
 				multiPart.transferTo(imageFile);
 				return nombre;
 			} catch(IOException e) {

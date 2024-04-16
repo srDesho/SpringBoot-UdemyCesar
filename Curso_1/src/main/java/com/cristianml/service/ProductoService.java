@@ -2,6 +2,8 @@ package com.cristianml.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,11 @@ public class ProductoService {
 	// Obtener productos
 	public List<ProductoModel> listar() {
 		return repositorio.findAll();
+	}
+
+	// Guardar producto
+	public void guardar(ProductoModel producto) {
+		repositorio.save(producto);
 	}
 
 }
