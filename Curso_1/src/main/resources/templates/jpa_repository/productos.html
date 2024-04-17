@@ -13,6 +13,12 @@
 		
 		<main class="container">
 				<h1>Productos</h1>
+				<div th:if="${mensaje!=null}"
+							th:class="'alert alert-'+${clase}+'  alert-dismissible fade show'">
+							<span th:text="${mensaje}"> </span>
+							<button th:if="${mensaje!=null}" type="button" class="btn-close"
+								data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
 				<p>
 					<a th:href="@{/jpa-repository/productos/add}" class="btn btn-success">Crear</a>
 				</p>
@@ -28,8 +34,8 @@
 							<th>Acciones</th>
 						</tr>
 					</thead>	
-					<tbody th:each="dato:${datos}">
-						<tr>
+					<tbody>
+						<tr th:each="dato:${datos}">
 							<td th:text="${dato.id}"></td>
 							<td th:text="${dato.categoriaId.nombre}"></td>
 							<td th:text="${dato.nombre}"></td>

@@ -25,8 +25,8 @@
 							<th>Acciones</th>
 						</tr>
 					</thead>	
-					<tbody th:each="dato:${datos}">
-						<tr>
+					<tbody>
+						<tr th:each="dato:${datos}">
 							<td th:text="${dato.id}"></td>
 							<td th:text="${dato.nombre}"></td>
 							<td>

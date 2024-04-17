@@ -1,5 +1,6 @@
 package com.cristianml.controllers;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -278,6 +279,27 @@ public class JpaController {
 		return "redirect:/jpa-repository/productos/editar/"+id;
 	}
 		
+	// Eliminar un producto
+	
+	@GetMapping("/productos/delete/{id}")
+	public String productos_delete(@PathVariable("id") Integer id, RedirectAttributes flash ) {
+		// Obtenemos el objeto mediante el id
+		ProductoModel producto = productoService.buscarPorId(id);
+		// obtenemos la imágen desde el servidor para eliminarlo del mismo mientra eliminamos el registro
+		File objImagen = new File(ruta_upload+"/producto/"+producto.getFoto());
+		
+		// Eliminamos mientras preguntamos si se eliminó o no
+		if (objImagen.delete()) {
+			this.productoService.eliminarPorId(id);
+			flash.addFlashAttribute("clase", "success");
+			flash.addFlashAttribute("mensaje", "Se eliminó el registro exitosamente.");
+			
+		} else {
+			flash.addFlashAttribute("clase", "danger");
+			flash.addFlashAttribute("mensaje", "No se pudo eliminar el registro intentelo más tarde.");
+		}
+		return "redirect:/jpa-repository/productos";
+	}
 	
 	// ================================= CAMPOS GENÉRICOS ====================================
 	// Añadimos al model la dirección Url que se encarga de accesar a la carpeta designada

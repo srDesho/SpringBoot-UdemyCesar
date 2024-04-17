@@ -44,5 +44,10 @@ public class ProductoService {
 		}
 		return null;
 	}
+	
+	// Eliminar por Id
+	public void eliminarPorId(Integer id) {
+		repositorio.deleteById(id);
+	}
 
 }
