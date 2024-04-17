@@ -226,6 +226,57 @@ public class JpaController {
 		flash.addFlashAttribute("mensaje", "Se creó el registro exitosamente.");
 		return "redirect:/jpa-repository/productos/add";
 	}
+	
+	// Editar Producto
+	@GetMapping("/productos/editar/{id}")
+	public String productos_editar(@PathVariable("id") Integer id, Model model) {
+		ProductoModel producto = productoService.buscarPorId(id);
+		model.addAttribute("producto", producto);
+		// producto.setCategoriaId(producto.getCategoriaId());
+		return "/jpa_repository/productos_editar";
+	}
+	
+	@PostMapping("/productos/editar/{id}")
+	public String productos_editar_post(@Valid ProductoModel producto, BindingResult result, RedirectAttributes flash
+			, @PathVariable("id") Integer id,  Model model, @RequestParam("archivoImagen") MultipartFile multiPart)  {
+		
+		// Preguntamos si existe errores en la validación
+		if(result.hasErrors()) {
+			Map<String, String> errores = new HashMap<>();
+			result.getFieldErrors()
+			.forEach( err -> {
+				errores.put(err.getField(),
+						"El campo ".concat(err.getField()).concat(" ").concat(err.getDefaultMessage()));
+			});
+			
+			model.addAttribute("errores", errores);
+			model.addAttribute("producto", producto);
+			return "/jpa_repository/productos_editar";
+			
+			}
+		
+		// Preguntamos si la imágen viene vacía
+		if (!multiPart.isEmpty()) {
+			String nombreImagen = Utilidades.guardarArchivo(multiPart, this.ruta_upload+"producto/");
+			
+			// Verificamos el valor de nombreImagen
+			if (nombreImagen == "no") {
+				flash.addFlashAttribute("clase", "danger");
+				flash.addFlashAttribute("mensaje", "El archivo para la imágen no es válido, debe ser JPG|JPEG|PNG");
+				return "redirect:/jpa-repository/productos/editar/"+id;
+			} 
+			if (nombreImagen != null) {
+				producto.setFoto(nombreImagen);
+			}
+		}
+		
+		// Seteamos el slug
+		producto.setSlug(Utilidades.getSlug(producto.getNombre()));
+		this.productoService.guardar(producto);
+		flash.addFlashAttribute("clase", "success");
+		flash.addFlashAttribute("mensaje", "Se editó el registro exitosamente.");
+		return "redirect:/jpa-repository/productos/editar/"+id;
+	}
 		
 	
 	// ================================= CAMPOS GENÉRICOS ====================================

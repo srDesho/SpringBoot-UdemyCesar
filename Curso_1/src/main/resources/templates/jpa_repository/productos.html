@@ -31,8 +31,8 @@
 					<tbody th:each="dato:${datos}">
 						<tr>
 							<td th:text="${dato.id}"></td>
-							<td th:text="${dato.nombre}"></td>
 							<td th:text="${dato.categoriaId.nombre}"></td>
+							<td th:text="${dato.nombre}"></td>
 							<td th:text="'$'+${#numbers.formatDecimal(dato.precio, 0, 'POINT', 0, 'POINT')}"></td>
 							<td style="text-align: center;">
 								<a th:href="${ruta_upload}+'producto/'+${dato.foto}" class="fancybox">

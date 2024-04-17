@@ -1,6 +1,7 @@
 package com.cristianml.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -32,7 +33,16 @@ public class ProductoService {
 
 	// Guardar producto
 	public void guardar(ProductoModel producto) {
-		repositorio.save(producto);
+		this.repositorio.save(producto);
+	}
+	
+	// Buscar producto por id
+	public ProductoModel buscarPorId(Integer id) {
+		Optional<ProductoModel> optional = repositorio.findById(id);
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
 	}
 
 }
