@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cristianml.modelos.ProductoModel;
@@ -29,6 +30,10 @@ public class ProductoService {
 	// Obtener productos
 	public List<ProductoModel> listar() {
 		return repositorio.findAll();
+	}
+	
+	public List<ProductoModel> listarDescendente() {
+		return repositorio.findAll(Sort.by("id").descending());
 	}
 
 	// Guardar producto

@@ -55,7 +55,7 @@ public class JpaController {
 	public String categorias(Model model) {
 		
 		// objetemos la liste de categorias y la enviamos con model a la vista
-		model.addAttribute("datos", this.categoriaService.listar());
+		model.addAttribute("datos", this.categoriaService.listarDescendente());
 		return "/jpa_repository/categorias";
 	}
 	
@@ -161,7 +161,7 @@ public class JpaController {
 	public String productos(Model model) {
 		
 		// objetemos la liste de categorias y la enviamos con model a la vista
-		model.addAttribute("datos", this.productoService.listar());
+		model.addAttribute("datos", this.productoService.listarDescendente());
 		return "/jpa_repository/productos";
 	}
 		

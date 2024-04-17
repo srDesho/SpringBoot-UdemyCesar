@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cristianml.modelos.CategoriaModel;
@@ -27,6 +28,11 @@ public class CategoriaService {
 	// Obtener categorias
 	public List<CategoriaModel> listar() {
 		return repositorio.findAll();
+	}
+	
+	// Listar por orden descendente
+	public List<CategoriaModel> listarDescendente() {
+		return repositorio.findAll(Sort.by("id").descending());
 	}
 	
 	// Crear categoria
