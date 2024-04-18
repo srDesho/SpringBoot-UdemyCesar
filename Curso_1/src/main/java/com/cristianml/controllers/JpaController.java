@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cristianml.modelos.CategoriaModel;
@@ -163,6 +165,22 @@ public class JpaController {
 		// objetemos la liste de categorias y la enviamos con model a la vista
 		model.addAttribute("datos", this.productoService.listarDescendente());
 		return "/jpa_repository/productos";
+	}
+	
+	// Buscar productos por categorías
+	@GetMapping("/productos/categorias/{id}")
+	public String productos_categorias(@PathVariable("id") Integer id, Model model) {
+		// Obtenemos el producto
+		CategoriaModel categoria = categoriaService.buscarPorId(id);
+		
+		// Verificamos si nos trae categorias y si no pues puede ser alguna inyección
+		if(categoria == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Página no encontrada"); // NOT_FOUND nos retorna el error 404
+		}
+		
+		model.addAttribute("datos", this.productoService.listarPorCategorias(categoria));
+		model.addAttribute("categoria", categoria);
+		return "/jpa_repository/productos_categorias";
 	}
 		
 	// Métodos para crear nuevos productos

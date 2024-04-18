@@ -1,7 +1,10 @@
 package com.cristianml.repositorios;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.cristianml.modelos.CategoriaModel;
 import com.cristianml.modelos.ProductoModel;
 
 // Por cada tabla o entidad crados en nuestros modelos, debemos crear una interface y un servicio
@@ -12,4 +15,11 @@ import com.cristianml.modelos.ProductoModel;
 //y en ID debemos escribir el tipo de dato del id del modelo 
 public interface IProductoRepositorio extends JpaRepository<ProductoModel, Integer>{
 	
+	// Creamos una busqueda compuesta al igual que hicimos con el slug en las categorías
+	// Creamos un List<tipo_de_objeto> con la nomenclatura findAllBy seguido del campo que quremos consultar de nuestro modelo
+	// recibe como parámetro el filtro que queremos hacer
+	
+	List<ProductoModel> findAllByCategoriaId(CategoriaModel categoria);
+	// Puede ser tambien si queremos que filtre por el nombre de la categoría
+	// List<ProductoModel> findAllByCategoriaIdNombre(CategoriaModel categoria, String nombre);
 }

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.cristianml.modelos.CategoriaModel;
 import com.cristianml.modelos.ProductoModel;
 import com.cristianml.repositorios.IProductoRepositorio;
 
@@ -32,8 +33,14 @@ public class ProductoService {
 		return repositorio.findAll();
 	}
 	
+	// Ordenar descendentemente
 	public List<ProductoModel> listarDescendente() {
 		return repositorio.findAll(Sort.by("id").descending());
+	}
+	
+	// Listar filtrando por categorías
+	public List<ProductoModel> listarPorCategorias(CategoriaModel categoria) {
+		return repositorio.findAllByCategoriaId(categoria);
 	}
 
 	// Guardar producto
