@@ -1,7 +1,9 @@
 package com.cristianml.controllers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -317,6 +319,19 @@ public class JpaController {
 			flash.addFlashAttribute("mensaje", "No se pudo eliminar el registro intentelo más tarde.");
 		}
 		return "redirect:/jpa-repository/productos";
+	}
+	
+	// ================================= WHERE IN =================================
+	// Este where in es para filtrar por n cantidad de categorías que querramos filtrar en la lista
+	@GetMapping("/productos-wherein")
+	public String productos_wherein(Model model) {
+		// Creamos la lista de categorías que queremos que se muestren en la lista de nuestro html de productos
+		List<CategoriaModel> categorias = new ArrayList<CategoriaModel>();
+		// añadimos las categorias a travez de los ids
+		categorias.add(categoriaService.buscarPorId(1));
+		categorias.add(categoriaService.buscarPorId(2));
+		model.addAttribute("datos", this.productoService.listarConWhereIn(categorias));
+		return "/jpa_repository/productos_wherein";
 	}
 	
 	// ================================= CAMPOS GENÉRICOS ====================================

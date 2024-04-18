@@ -42,6 +42,11 @@ public class ProductoService {
 	public List<ProductoModel> listarPorCategorias(CategoriaModel categoria) {
 		return repositorio.findAllByCategoriaId(categoria);
 	}
+	
+	// Uso de where in, para crear filtro de que se muestre sólo las categorías dadas
+	public List<ProductoModel> listarConWhereIn(List<CategoriaModel> categorias) {
+		return repositorio.findAllByCategoriaIdIn(categorias);
+	}
 
 	// Guardar producto
 	public void guardar(ProductoModel producto) {

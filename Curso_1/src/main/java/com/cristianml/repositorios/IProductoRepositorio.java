@@ -18,8 +18,12 @@ public interface IProductoRepositorio extends JpaRepository<ProductoModel, Integ
 	// Creamos una busqueda compuesta al igual que hicimos con el slug en las categorías
 	// Creamos un List<tipo_de_objeto> con la nomenclatura findAllBy seguido del campo que quremos consultar de nuestro modelo
 	// recibe como parámetro el filtro que queremos hacer
-	
 	List<ProductoModel> findAllByCategoriaId(CategoriaModel categoria);
+	
 	// Puede ser tambien si queremos que filtre por el nombre de la categoría
 	// List<ProductoModel> findAllByCategoriaIdNombre(CategoriaModel categoria, String nombre);
+	
+	// Para poder hacer un where in
+	// Hacemos los mismo que antes sólo que añadimos el in al final y el parámetro va a ser una lista del tipo del modelo requerido
+	List<ProductoModel> findAllByCategoriaIdIn(List<CategoriaModel> categorias);
 }
