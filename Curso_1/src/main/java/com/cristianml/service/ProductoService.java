@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +49,13 @@ public class ProductoService {
 	public List<ProductoModel> listarConWhereIn(List<CategoriaModel> categorias) {
 		return repositorio.findAllByCategoriaIdIn(categorias);
 	}
-
+	
+	// Para trabajar con paginación debemos hacer con el genérico Page y como parámetro un objeto de tipo Pageable,
+	// se deben importar de .data.domain
+	public Page<ProductoModel> listarPaginacion(Pageable pageable) {
+		return this.repositorio.findAll(pageable);
+	}
+	
 	// Guardar producto
 	public void guardar(ProductoModel producto) {
 		this.repositorio.save(producto);

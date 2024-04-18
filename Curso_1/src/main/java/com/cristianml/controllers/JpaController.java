@@ -10,6 +10,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +31,7 @@ import com.cristianml.modelos.CategoriaModel;
 import com.cristianml.modelos.ProductoModel;
 import com.cristianml.service.CategoriaService;
 import com.cristianml.service.ProductoService;
+import com.cristianml.utilidades.Constantes;
 import com.cristianml.utilidades.Utilidades;
 
 @Controller
@@ -332,6 +336,23 @@ public class JpaController {
 		categorias.add(categoriaService.buscarPorId(2));
 		model.addAttribute("datos", this.productoService.listarConWhereIn(categorias));
 		return "/jpa_repository/productos_wherein";
+	}
+	
+	// Paginación para Productos
+	@GetMapping("/productos-paginacion")
+	// Recibe como @RequestParam  el valor con nombre page y en required designamos si es requerido o no (no siempre recibirá valor)
+	public String productos_paginacion(@RequestParam(value = "page", required = false) Integer page , Model model) {
+		// Creamos el método en el ProductoService, luego creamos una constante en utilidades para la cantidad de datos a mostrar 
+		// Creamos un objeto de tipo Pageable que va a ser inicializado con PageRequest para que pueda ser ordenado.
+		// PageRequest.of(nroDePaginaDondeEstamosParados, cantidadDeRrgistrosAMostrarPorPagina)
+		Pageable pageable = PageRequest.of((page == null ? 0 : page), Constantes.CANTIDAD_DE_PAGINA, Sort.by("id").descending());
+		
+		// Enviamos la lista con el método (listarPaginacion) que creamos en ProductoService
+		model.addAttribute("datos", productoService.listarPaginacion(pageable));
+		
+		// Enviamos la dirección de la página en la que estamos parados
+		model.addAttribute("paginacion", "jpa-repository/productos-paginacion");
+		return "/jpa_repository/productos_paginacion";
 	}
 	
 	// ================================= CAMPOS GENÉRICOS ====================================
