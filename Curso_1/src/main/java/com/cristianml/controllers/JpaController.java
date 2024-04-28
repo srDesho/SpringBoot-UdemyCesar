@@ -329,7 +329,7 @@ public class JpaController {
 	// Este where in es para filtrar por n cantidad de categorías que querramos filtrar en la lista
 	@GetMapping("/productos-wherein")
 	public String productos_wherein(Model model) {
-		// Creamos la lista de categorías que queremos que se muestren en la lista de nuestro html de productos
+		// Creamos la lista de categorías que queremos que se muestren en la tabla de nuestro html de productos
 		List<CategoriaModel> categorias = new ArrayList<CategoriaModel>();
 		// añadimos las categorias a travez de los ids
 		categorias.add(categoriaService.buscarPorId(1));

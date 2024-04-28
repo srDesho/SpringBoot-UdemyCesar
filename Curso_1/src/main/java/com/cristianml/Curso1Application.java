@@ -14,7 +14,8 @@ public class Curso1Application {
 	}
 	
 	// Creamos un bean para que el método pueda ser instanciado en cualquier parte del proyecto
-	// RestTemplate es un objeto que spring utiliza como clientes
+	// Lo instancia con una inyección de dependencias y así nos evitamos estar creando los new RestTemplate
+	// RestTemplate es un objeto que spring utiliza como clientes, sirve para consumir APIS
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
