@@ -22,6 +22,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -112,6 +115,7 @@ public class ReportesController {
 	
 	// Creamos nuestro método para controlar
 	@GetMapping("/excel")
+	// Lo hacemos con void porque le forzaremos una descarga
 	public void excel(HttpServletResponse response) throws IOException {
 		// Esto es para poder crear nuestro cabecero que utilizará el script para poder construir nuestro excel
 		response.setContentType("application/octec-stream");
@@ -190,5 +194,39 @@ public class ReportesController {
 
 	}
 	
+	
+	// ========================================= CSV ============================================
+	@GetMapping("/csv")
+	// Lo hacemos con void porque le forzaremos una descarga
+	public void csv(HttpServletResponse response) throws IOException {
+		// Esto es para poder crear nuestro cabecero que utilizará el script para poder construir nuestro excel
+		response.setContentType("text/csv");
+		
+		// Asginamos un nombre de forma dinámica con el System.currentTimeMillis();
+		long time = System.currentTimeMillis();
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=reporte_" + time + ".csv";
+		response.setContentType("text/csv;charset=utf-8"); // Esto para no tener problemas con caracteres especiales.	
+		
+		// Creamos un objeto de tipo ICsvBeanWriter
+		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+		
+		// Creamos un arreglo para los nombres de las columnas de nuestra tabla
+		String[] csvHeader = {"ID", "Nombre", "Descripción", "Precio", "Foto"};
+		// Se sugiere hacer lo mismo pero con los datos escritos en minúsculas
+		String[] nameMapping = {"id", "nombre", "descripcion", "precio", "foto"};
+		
+		// Escribimos el header
+		csvWriter.writeHeader(csvHeader);
+		
+		// Generamos las filas dinámicas del reporte
+		List<ProductoModel> datos = this.productoService.listar();
+		for (ProductoModel dato : datos) {
+			csvWriter.write(dato, nameMapping); // Name mapping es usado internamente para que haga su propio mapping en csv
+		}
+		
+		// Cerramos la comunicación
+		csvWriter.close();
+	}
 	
 }

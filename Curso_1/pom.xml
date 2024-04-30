@@ -122,6 +122,15 @@
 		    <version>5.2.3</version>
 		</dependency>
 		<!-- // reporte excel con apache poi -->
+		
+		<!-- reporte CSV con Super CSV Core -->
+		<!-- Recomendable si tengo muchos datos que hacer reportes, mejor lo hago en formato CSV-->
+		<dependency>
+		    <groupId>net.sf.supercsv</groupId>
+		    <artifactId>super-csv</artifactId>
+		    <version>2.4.0</version>
+		</dependency>
+		<!-- // reporte CSV con Super CSV Core -->
 
 
 		
