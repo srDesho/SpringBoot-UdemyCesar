@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 
 // Esta clase la vamos a usar para configurar el core del framework
@@ -65,4 +66,12 @@ public class Seguridad {
 		// el .build() es el que tiene toda la información que nosotros deseemos ejecutar
 		return http.build();
 	}
+	
+	// Configuración para poder mostrar los objetos estáticos (imágenes, videos, archivos js, css, etc)
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer () {
+		// Automáticamente se refiere a la carpeta resources de nuestro proyecto
+		return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/css/**");
+	}
+	
 }
