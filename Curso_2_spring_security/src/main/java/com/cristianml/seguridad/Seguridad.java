@@ -22,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class Seguridad {
 
-	// Creamos el método que spring security utilizará para hacer todas las configuraciones, sobre todo para autenticación
+	// Creamos los métodos que spring security utilizará para hacer todas las configuraciones, sobre todo para autenticación
 	
 	// La anotación @Bean en Spring Boot se utiliza para indicarle a Spring que un método específico en una clase de configuración 
 	// debe ser tratado como un método de inicialización para construir y configurar un objeto gestionado por Spring en el 
@@ -59,7 +59,8 @@ public class Seguridad {
 		.antMatchers(
 				"/protegido/**"
 				// Con este método le indicamos los roles que queremos que accesen a las rutas que escribimos
-				).hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+				).hasAnyAuthority("ROLE_ADMIN")
+				// .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
 		
 		// Ahora toca hacer las configuraciones generales
 		.anyRequest().authenticated() // para decirle al usuario que se va a autenticar con esto
