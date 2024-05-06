@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+</head>
+
+<!-- debemos crear la carpeta con el nombre de error para que spring security nos los reconozca -->
+<!-- y el nombre del template debe ser el código del error, en este caso es 403.html -->
+
+<body>
+	<div class="container">
+		<div class="card border-primary mb-3">
+			<div class="card-header bg-primary text-white">
+				<h1>Error 403</h1>
+			</div>
+			<div class="card-body text-primary">
+				<div th:insert="layout/menu :: menu"></div>
+				<h3>No tiene autorización para ver este contenigo.</h3>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
