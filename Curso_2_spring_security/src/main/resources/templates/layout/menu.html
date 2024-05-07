@@ -15,7 +15,13 @@
 		<li class="nav-item"><a class="nav-link"
 			th:href="@{/liberado/liberado-2}">Liberado 2</a>
 		</li>
-		
-			
+	</ul>
+	<!-- Esta es la manera para obtener datos de la tabla de la db -->
+	<!-- Ésto no se motrará si el usuario no está logeado -->
+	<div sec:authorize="isAuthenticated()">
+		<!-- Con sec:authentication="name" obtenemos el nombre del usuario y lo escribimos en un span-->
+		<!-- Con sec:authentication="principal.authorities" obtenemos los roles del usuario, el pricipal 
+			viene desde nuestro acceso controller -->
+		Hola <span sec:authentication="name"></span> | Roles <span sec:authentication="principal.authorities"></span>
 	</div>
 </div>
