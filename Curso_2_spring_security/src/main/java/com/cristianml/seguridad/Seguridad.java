@@ -2,6 +2,7 @@ package com.cristianml.seguridad;
 
 import javax.annotation.security.PermitAll;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,10 @@ import org.springframework.security.web.SecurityFilterChain;
 // Con esto spring framework entienda que aquí vamos a hacer las configuraciones manualmente, nuestra propia configuración
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class Seguridad {
+	
+	// Inyectamos el LoginPersonalizado
+	@Autowired
+	private LoginPersonalizado loginPersonalizado;
 
 	// Creamos los métodos que spring security utilizará para hacer todas las configuraciones, sobre todo para autenticación
 	
@@ -67,8 +72,12 @@ public class Seguridad {
 		
 		// página de login
 		// .and().formLogin().permitAll() // este es el ajuste predeterminado que nos dá spring security
-		// hacemos el login de foma personalizada, llamando a nuestra propia template
-		.and().formLogin().loginPage("/acceso/login").permitAll()
+		
+		// hacemos el login de foma personalizada (la vista), llamando a nuestra propia template
+		// .and().formLogin().loginPage("/acceso/login").permitAll()
+		
+		// hacemos lo mismo para cuando queremos personalizar el login pero con el POST
+		.and().formLogin().successHandler(loginPersonalizado).loginPage("/acceso/login").permitAll()
 		
 		// ruta de logout
 		.and().logout().permitAll() // este es el ajuste predeterminado que nos dá spring security
