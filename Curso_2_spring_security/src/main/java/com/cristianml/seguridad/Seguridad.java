@@ -65,11 +65,15 @@ public class Seguridad {
 		// Ahora toca hacer las configuraciones generales
 		.anyRequest().authenticated() // para decirle al usuario que se va a autenticar con esto
 		
-		// Indicamos el formato del login
-		.and().formLogin().permitAll()
-		// Lo mismo hacemos con el logout
-		.and().logout().permitAll()
-				;
+		// página de login
+		// .and().formLogin().permitAll() // este es el ajuste predeterminado que nos dá spring security
+		// hacemos el login de foma personalizada, llamando a nuestra propia template
+		.and().formLogin().loginPage("/acceso/login").permitAll()
+		
+		// ruta de logout
+		.and().logout().permitAll() // este es el ajuste predeterminado que nos dá spring security
+		
+		;
 		
 		// el .build() es el que tiene toda la información que nosotros deseemos ejecutar
 		return http.build();
