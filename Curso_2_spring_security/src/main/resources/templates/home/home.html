@@ -14,6 +14,10 @@
 			<div class="card-header bg-primary text-white">
 				<h1>Ejemplo Spring Security</h1>
 			</div>
+			<div th:if="${mensaje!=null}" th:class="'alert alert-' + ${clase} + ' alert-dismissible fade show'">
+				<span th:text="${mensaje}"></span>
+				<button th:if="${mensaje!=null}" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
 			<div class="card-body text-primary">
 				<div th:insert="layout/menu :: menu"></div>
 				<img th:src="@{/images/logo.png}" />
