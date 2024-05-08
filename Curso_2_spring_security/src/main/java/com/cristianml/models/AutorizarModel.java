@@ -29,6 +29,12 @@ public class AutorizarModel {
 	public AutorizarModel() {
 		super();
 	}
+	
+	public AutorizarModel(String nombre, UsuarioModel usuarioId) {
+		super();
+		this.nombre = nombre;
+		this.usuarioId = usuarioId;
+	}
 
 	public Integer getId() {
 		return id;
@@ -40,14 +46,6 @@ public class AutorizarModel {
 
 	public String getNombre() {
 		return nombre;
-	}
-	
-	
-
-	public AutorizarModel(String nombre, UsuarioModel usuarioId) {
-		super();
-		this.nombre = nombre;
-		this.usuarioId = usuarioId;
 	}
 
 	public void setNombre(String nombre) {

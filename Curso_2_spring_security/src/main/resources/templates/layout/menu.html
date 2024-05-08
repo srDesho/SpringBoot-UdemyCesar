@@ -18,7 +18,10 @@
 		<!-- Agregamos otro enlace el cual será manejado por security y será para cerrar la sesión -->
 		<!-- El onclick hace la llamada al formulario con el name = logout_form, que está crado más abajo -->
 		<li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link"
-			href="javascript:void(0);" onclick="document.logout_form.submit();">Cerrar sesión</a>
+			href="javascript:void(0);" onclick="document.logout_form.submit();">Cerrar Sesión</a>
+		</li>
+		<li class="nav-item"><a class="nav-link"
+			th:href="@{/acceso/registro}">Registro</a>
 		</li>
 		
 		
