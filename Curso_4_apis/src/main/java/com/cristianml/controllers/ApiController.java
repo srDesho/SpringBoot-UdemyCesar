@@ -2,6 +2,7 @@ package com.cristianml.controllers;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,12 @@ public class ApiController {
 	@GetMapping("/metodo")
 	public String metodo_get() {
 		return "Método GET";
+	}
+	
+	// Trabajando con parámetros
+	@GetMapping("/metodo/{id}")
+	public String metodo_get_parametro(@PathVariable("id") String id) {
+		return "Método get con parámetros = " + id;
 	}
 	
 	@PostMapping("/metodo")
