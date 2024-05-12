@@ -1,5 +1,6 @@
 package com.cristianml.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cristianml.models.EjemploModel;
+import com.cristianml.utilidades.Utilidades;
 
 // Ésta es la manera real en la que se crean los endpoints, ya que lo normal que vamos a retornar datos en formato json
 
@@ -23,6 +25,12 @@ public class ResponseEntityController {
 	public ResponseEntity<String> metodo_get() {
 		// Retornamos un valor de tipo ResponseEntity, y el método .ok() sirve para retornar el estado Http 200
 		return ResponseEntity.ok("Método GET desde ResponseEntity");
+	}
+	
+	// Método de práctica con un ResponseEntity personalizado en nuestro paquete de Utilidades
+	@GetMapping("/response-entity-personalizado")
+	public ResponseEntity<Object> metodo_get_personalizado() {
+		return Utilidades.generateResponse(HttpStatus.OK, "ResponseEntity Personalizado");
 	}
 	
 	// Pasando Parámetros
