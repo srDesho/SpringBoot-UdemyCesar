@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +29,12 @@ public class DbController {
 	@GetMapping("/categorias")
 	public List<CategoriaModel> categorias() {
 		return this.categoriaService.listar();
+	}
+	
+	// Buscar por Id
+	@GetMapping("/categorias/{id}")
+	public CategoriaModel categorias_detalle(@PathVariable("id") Integer id) {
+		return this.categoriaService.buscarPorId(id);
 	}
 	
 	// Método para listar categorias
