@@ -13,7 +13,7 @@ import com.cristianml.repositories.ICategoriaRepository;
 
 @Service
 @Primary
-public class CategroriaService {
+public class CategoriaService {
 
 	@Autowired
 	private ICategoriaRepository categoriaRepository;
