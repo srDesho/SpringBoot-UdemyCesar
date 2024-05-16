@@ -3,13 +3,18 @@ package com.cristianml.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cristianml.models.CategoriaModel;
 import com.cristianml.services.CategoriaService;
+import com.cristianml.utilidades.Utilidades;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -37,10 +42,31 @@ public class DbController {
 		return this.categoriaService.buscarPorId(id);
 	}
 	
-	// Método para listar categorias
+	// Crear categoría
 	
+	// La anotación @RequestBody en Spring Boot se utiliza para indicar que un parámetro de un método controlador debe ser 
+	// vinculado al cuerpo de la solicitud HTTP entrante. Esto es especialmente útil cuando se trabaja con solicitudes 
+	// que envían datos en formato JSON, XML o cualquier otro formato que debe ser convertido a un objeto Java.
+
+	// ¿Cómo funciona @RequestBody?
+	// Cuando se recibe una solicitud HTTP que contiene datos en el cuerpo (por ejemplo, una solicitud POST con un JSON 
+	// en el cuerpo), Spring MVC utiliza la anotación @RequestBody para:
+
+	// Leer el cuerpo de la solicitud HTTP.
+	// Convertir los datos del cuerpo al tipo de objeto especificado en el parámetro del método controlador.
+	// La conversión se realiza utilizando HttpMessageConverters configurados (por ejemplo, MappingJackson2HttpMessageConverter
+	// para JSON).
 	
-	
+	@PostMapping("/categorias")
+	// Va a retornar el tipo Object para que podamos utilizar nuestro response personalizado de nuestra clase Utilidades
+	public ResponseEntity<Object> categorias_post(@RequestBody CategoriaModel request) {
+		// Seteamos el slug para que no se ingrese vacío
+		request.setSlug(Utilidades.getSlug(request.getNombre()));
+		// Guardamos el registro
+		this.categoriaService.guardar(request);
+		// Retornamos la respuesta con el estado HttpStatus.CREATED que retorna el 201 que es el estandar de crear un registro
+		return Utilidades.generateResponse(HttpStatus.CREATED, "Se ha creado el registro exitosamente");
+	}
 	
 	
 	

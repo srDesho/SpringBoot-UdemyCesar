@@ -24,7 +24,7 @@ public class CategoriaService {
 	}
 	
 	// Guardar
-	public void guradar(CategoriaModel categoria) {
+	public void guardar(CategoriaModel categoria) {
 		this.categoriaRepository.save(categoria);
 	}
 	
