@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,6 +67,21 @@ public class DbController {
 		this.categoriaService.guardar(request);
 		// Retornamos la respuesta con el estado HttpStatus.CREATED que retorna el 201 que es el estandar de crear un registro
 		return Utilidades.generateResponse(HttpStatus.CREATED, "Se ha creado el registro exitosamente");
+	}
+	
+	// Método para editar
+	@PutMapping("/categorias/{id}")
+	public ResponseEntity<Object> categorias_put(@PathVariable("id") Integer id, @RequestBody CategoriaModel request) {
+		// Obtenemos la categoria por id
+		CategoriaModel categoria = this.categoriaService.buscarPorId(id);
+		
+		// Editamos los datos
+		categoria.setNombre(request.getNombre());
+		categoria.setSlug(Utilidades.getSlug(request.getNombre()));
+		
+		// Guardamos
+		this.categoriaService.guardar(categoria);
+		return Utilidades.generateResponse(HttpStatus.OK, "Se editó el registro exitosamente.");
 	}
 	
 	
