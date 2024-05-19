@@ -22,7 +22,7 @@ public class ProductoModel {
 	private String foto;
 	
 	@OneToOne
-	@JoinColumn(name = "categoriaId")
+	@JoinColumn(name = "categoria_id")
 	private CategoriaModel categoriaId;
 
 	public Integer getId() {

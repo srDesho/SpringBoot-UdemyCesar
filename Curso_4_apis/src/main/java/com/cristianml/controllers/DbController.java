@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cristianml.models.CategoriaModel;
 import com.cristianml.services.CategoriaService;
+import com.cristianml.services.ProductoService;
 import com.cristianml.utilidades.Utilidades;
 
 @RestController
@@ -28,6 +30,10 @@ public class DbController {
 	
 	@Autowired
 	private CategoriaService categoriaService;
+	
+	@Autowired
+	private ProductoService productoService;
+	
 
 	// ================================================ CATEGORIAS ================================================
 	
@@ -84,6 +90,25 @@ public class DbController {
 		return Utilidades.generateResponse(HttpStatus.OK, "Se editó el registro exitosamente.");
 	}
 	
+	// Método para eliminar una categoría
+	@DeleteMapping("/categorias/{id}")
+	public ResponseEntity<Object> categorias_delete(@PathVariable("id") Integer id) {
+		System.out.println("Verificar ==== " + this.productoService.verificarRelacionCategoriaProducto(id));
+		// Verificamos si la categoría tiene relación con registros de la tabla productos
+		if (this.productoService.verificarRelacionCategoriaProducto(id) == false) {
+			return Utilidades.generateResponse(HttpStatus.BAD_REQUEST
+					, "No se puede eliminar el registro debido a que la categoría tiene relación con la tabla productos");
+		}
+		
+		try {
+			this.categoriaService.eliminar(id);
+			return Utilidades.generateResponse(HttpStatus.OK, "Registro eliminado exitosamente.");
+		} catch (Exception e) {
+			// Retornamos BAD_REQUEST porque es el estado 400 que indica que hay una mala respuesta, en este caso
+			// que hubo un error al borrar el registro
+			return Utilidades.generateResponse(HttpStatus.BAD_REQUEST, "Falló la ejecución, por favor inténtelo más tarde.");
+		}
+	}
 	
 	
 	// ================================================ PRODUCTOS ================================================

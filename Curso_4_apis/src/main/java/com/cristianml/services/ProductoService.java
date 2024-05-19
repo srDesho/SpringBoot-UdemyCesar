@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.cristianml.models.CategoriaModel;
 import com.cristianml.models.ProductoModel;
 import com.cristianml.repositories.IProductoRepository;
 
@@ -42,5 +43,15 @@ public class ProductoService {
 		this.productoRepository.deleteById(id);
 	}
 
+	// Método para saber si existe una relación de una categoría con productos
+	public boolean verificarRelacionCategoriaProducto(Integer categoriaId) {
+        CategoriaModel categoria = new CategoriaModel();
+        categoria.setId(categoriaId);
+        if (productoRepository.existsByCategoriaId(categoria)) {
+        	return false;
+        } else {
+        	return true;
+        }
+    }
 	
 }
