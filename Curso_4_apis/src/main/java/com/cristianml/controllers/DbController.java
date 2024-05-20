@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cristianml.models.CategoriaModel;
 import com.cristianml.models.ProductoModel;
 import com.cristianml.services.CategoriaService;
 import com.cristianml.services.ProductoService;
+import com.cristianml.utilidades.Constantes;
 import com.cristianml.utilidades.Utilidades;
 
 @RestController
@@ -122,6 +125,55 @@ public class DbController {
 	@GetMapping("/productos/{id}")
 	public ProductoModel productos_detalle(@PathVariable("id") Integer id) {
 		return this.productoService.buscarPorId(id);
+	}
+	
+	// Método para crear producto, subida de archivo
+	// Para crearlo mediante Http debemos enviar a travez de un form-data no como un Json ya que vamos a
+	// subir archivos a un servidor.
+	// En postman tenemos la opción en body, marcamos form-data, desmarcamos en la pestaña Header el content-type
+	// porque sino fallará, no debemos enviar el cabecero de tipo json al hacer uso de form-data.
+	
+	// En body escribimos los mismos campos que tenemos en nuestra base de datos, con sus valores
+	// Y al final creamos el parámetro file, debe tener el mismo nombre que recibimos en nuestro  @RequestParam("file")
+	// seleccionamos el tipo "file" y cargamos la imágen y enviamos
+	
+	@PostMapping("/productos")
+	public ResponseEntity<Object> productos_post(ProductoModel producto, @RequestParam("file")
+	MultipartFile file) {
+		// Creamos variables de estado y mensaje
+		HttpStatus status = HttpStatus.OK;
+		String mensaje = "";
+		
+		// Validamos si el archivo es válido o si está vacío
+		if (!file.isEmpty()) {
+			// Creamos la imágen para que se suba a nuestro servidor
+			String nombreImagen = Utilidades.guardarArchivo(file, Constantes.RUTA_UPLOAD+"producto/");
+			// Validamos si la imágen es válida
+			if (nombreImagen == "no") {
+				status = HttpStatus.BAD_REQUEST;
+				mensaje = "La foto enviada no es válida, debe ser de formato JPG|PNG|JPEG";
+			} else {
+				// Validamos que no sea nulo
+				if (nombreImagen != null) {
+					// Asignamos el nombre de la imágen al model
+					producto.setFoto(nombreImagen);
+					// Creamos el slug
+					producto.setSlug(Utilidades.getSlug(producto.getNombre()));
+					// Guardamos en la base de datos
+					this.productoService.guardar(producto);
+					
+					status = HttpStatus.CREATED; // Asignamos el estado 2001 que se utiliza cuando se crea un registro
+					mensaje = "Se creo el registro exitosamente.";
+				}
+			}
+			
+		} else {
+			// Si está vacío significa que la imágen no se cargó o no es un archivo válido
+			status = HttpStatus.BAD_REQUEST;
+			mensaje = "La foto enviada no es válida, debe ser de formato JPG|PNG|JPEG";
+		}
+		
+		return Utilidades.generateResponse(status, mensaje);
 	}
 	
 }
