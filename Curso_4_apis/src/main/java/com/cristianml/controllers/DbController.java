@@ -118,6 +118,10 @@ public class DbController {
 		return this.productoService.listar();
 	}
 	
-
+	// Detalle de un sólo producto
+	@GetMapping("/productos/{id}")
+	public ProductoModel productos_detalle(@PathVariable("id") Integer id) {
+		return this.productoService.buscarPorId(id);
+	}
 	
 }
