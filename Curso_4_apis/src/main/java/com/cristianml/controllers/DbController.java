@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cristianml.models.CategoriaModel;
+import com.cristianml.models.ProductoModel;
 import com.cristianml.services.CategoriaService;
 import com.cristianml.services.ProductoService;
 import com.cristianml.utilidades.Utilidades;
@@ -112,6 +113,11 @@ public class DbController {
 	
 	
 	// ================================================ PRODUCTOS ================================================
+	@GetMapping("/productos")
+	public List<ProductoModel> productos() {
+		return this.productoService.listar();
+	}
 	
+
 	
 }
