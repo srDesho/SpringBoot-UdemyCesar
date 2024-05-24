@@ -38,7 +38,7 @@ public class AccesoController {
 	@PostMapping("/login")
 	// ResponseEntity<?> con una incognita porque no vamos a necesitar nada.
 	// Vamos a usar RequestBody porque nos permite retornar parámetros Json Request.
-	// {"correo":"cristian@gmail.com", "password":"123456"}
+	// {"correo":"info@tamila.cl", "password":"123456"}
 	public ResponseEntity<?> login(@RequestBody AuthRequest request) {
 		
 		try {
@@ -61,7 +61,8 @@ public class AccesoController {
 			return ResponseEntity.ok(response);
 			
 		} catch (BadCredentialsException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			// UNAUTHORIZED es el error 401 el cual se refiere a que no está autenticado
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
 		}
 	}
 	
